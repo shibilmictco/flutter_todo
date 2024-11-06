@@ -184,24 +184,40 @@ class _TodoHomeScreenState extends State<TodoHomeScreen> {
                     final todo = myTodoList[index];
 
                     return ListTile(
+                      leading: Checkbox(
+                        value: todo.isCompleted,
+                        onChanged: (value) {
+                          final completedTodo = TodoModel(
+                            title: todo.title,
+                            decription: todo.decription,
+                            isCompleted: value ?? false,
+                          );
+                          myTodoList[index] = completedTodo;
+                          setState(() {});
+                        },
+                      ),
                       tileColor: Colors.grey[50],
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(12),
                       ),
                       title: Text(
                         todo.title,
-                        style: const TextStyle(
-                          color: Colors.black87,
-                          fontWeight: FontWeight.w500,
-                          fontSize: 16,
-                        ),
+                        style: TextStyle(
+                            color: Colors.black87,
+                            fontWeight: FontWeight.w500,
+                            fontSize: 16,
+                            decoration: todo.isCompleted
+                                ? TextDecoration.lineThrough
+                                : null),
                       ),
                       subtitle: Text(
                         todo.decription,
-                        style: const TextStyle(
-                          color: Colors.black87,
-                          fontSize: 12,
-                        ),
+                        style: TextStyle(
+                            color: Colors.black87,
+                            fontSize: 12,
+                            decoration: todo.isCompleted
+                                ? TextDecoration.lineThrough
+                                : null),
                       ),
                       trailing: IconButton(
                           onPressed: () {
